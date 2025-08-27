@@ -1,0 +1,10 @@
+# Ignore specific large files by full path
+
+Cargo Booking System/A_Cargo_Booking/WebContent/Shipment.mp4
+JDK Setup/jdk-8u202-windows-x64.exe
+Cargo Booking System/A_Cargo_Booking.war
+JDK Setup/jdk-20_windows-x64_bin.exe
+
+# (Optional) Ignore other unnecessary system files
+.DS_Store
+Thumbs.db

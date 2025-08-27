@@ -1,0 +1,67 @@
+package operations;
+
+import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TransferServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Retrieve form data
+        String senderAccount = request.getParameter("senderAccount");
+        String receiverAccount = request.getParameter("receiverAccount");
+        String transferAmount = request.getParameter("transferAmount");
+
+        // Perform money transfer logic
+        boolean transferSuccess = performTransfer(senderAccount, receiverAccount, transferAmount);
+
+        if (transferSuccess) {
+            // Redirect to a success page
+            response.sendRedirect("transferSuccess.html");
+        } else {
+            // Redirect to a failure page
+            response.sendRedirect("transferFailure.html");
+        }
+    }
+
+    private boolean performTransfer(String senderAccount, String receiverAccount, String transferAmount) {
+        // JDBC connection variables
+        String jdbcURL = "jdbc:mysql://localhost:3306/bank";
+        String dbUsername = "username";
+        String dbPassword = "password";
+
+        // SQL queries
+        String updateSenderQuery = "UPDATE accounts SET balance = balance - ? WHERE account_number = ?";
+        String updateReceiverQuery = "UPDATE accounts SET balance = balance + ? WHERE account_number = ?";
+
+        try (Connection connection = DriverManager.getConnection(jdbcURL, dbUsername, dbPassword);
+             PreparedStatement senderStatement = connection.prepareStatement(updateSenderQuery);
+             PreparedStatement receiverStatement = connection.prepareStatement(updateReceiverQuery)) {
+            // Set parameters for sender account update
+            senderStatement.setString(1, transferAmount);
+            senderStatement.setString(2, senderAccount);
+
+            // Set parameters for receiver account update
+            receiverStatement.setString(1, transferAmount);
+            receiverStatement.setString(2, receiverAccount);
+
+            // Execute updates within a transaction
+            connection.setAutoCommit(false);
+            senderStatement.executeUpdate();
+            receiverStatement.executeUpdate();
+            connection.commit();
+
+            return true; // Money transfer successful
+        } catch (SQLException e) {
+            // Handle any exceptions and rollback transaction on failure
+            e.printStackTrace();
+            return false; // Money transfer failed
+        }
+    }
+}

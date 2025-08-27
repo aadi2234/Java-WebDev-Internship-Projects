@@ -1,0 +1,82 @@
+package Project;
+
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class registerUser
+ */
+public class registerUser2 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public registerUser2() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		Connection con=MysqlCon.getCon();
+		String name= request.getParameter("name");
+		String contact= request.getParameter("contactno");
+		String eid= request.getParameter("emailid");
+		String password= request.getParameter("pass");
+        try {
+            PreparedStatement ps1 = con.prepareStatement("SELECT * FROM user_tbl WHERE uemail=?");
+            ps1.setString(1, eid);
+            ResultSet rs = ps1.executeQuery();
+            if (rs.next()) 
+            {
+                System.out.println("User Already Exists!");
+                response.sendRedirect("index.html");
+            } 
+            else 
+            {
+                // Insert the user details into the table
+                PreparedStatement ps2 = con.prepareStatement("INSERT INTO user_tbl (id, uname, umob, uemail, upass) VALUES (?, ?, ?, ?, ?)");
+                ps2.setInt(1, 0);
+                ps2.setString(2, name);
+                ps2.setString(3, contact);
+                ps2.setString(4, eid);
+                ps2.setString(5, password);
+                int i = ps2.executeUpdate();
+                if (i > 0) 
+                {
+                    System.out.println("Registration Successful!");
+                    response.sendRedirect("index.html");
+                } 
+                else 
+                {
+                    System.out.println("Failed to register the user.");
+                    response.sendRedirect("registeruser.html");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+
+}

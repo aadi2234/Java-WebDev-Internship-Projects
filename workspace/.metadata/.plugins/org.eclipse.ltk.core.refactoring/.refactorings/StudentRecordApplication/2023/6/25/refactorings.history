@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MysqlCon.java&apos; to &apos;RemainderApp/src/Remainder&apos;&#x0D;&#x0A;- Original project: &apos;StudentRecordApplication&apos;&#x0D;&#x0A;- Destination element: &apos;RemainderApp/src/Remainder&apos;&#x0D;&#x0A;- Original element: &apos;StudentInfo.MysqlCon.java&apos;" description="Copy compilation unit" destination="=RemainderApp/src&lt;Remainder" element1="/src&lt;StudentInfo{MysqlCon.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1687263052520" units="1" version="1.0"/>
+</session>

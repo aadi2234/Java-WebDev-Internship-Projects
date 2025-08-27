@@ -1,0 +1,84 @@
+package operations;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import connectionDB.MysqlCon;
+
+/**
+ * Servlet implementation class TransferServlet
+ */
+public class TransferServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public TransferServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		int fromAccount = Integer.parseInt(request.getParameter("fromAccount"));
+        int toAccount = Integer.parseInt(request.getParameter("toAccount"));
+        double amount = Double.parseDouble(request.getParameter("amount"));
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        try {
+        	//con.setAutoCommit(false);
+        	Connection con = MysqlCon.getCon();
+            updateAccountBalance(con, fromAccount, amount);
+            updateAccountBalance(con, toAccount, amount);
+
+            response.sendRedirect("viewAccount.jsp");
+        } catch (Exception e) {
+            e.printStackTrace();
+//            response.sendRedirect("viewAccount.jsp");
+        }
+    }
+
+    private void updateAccountBalance(Connection con, int accountNumber, double amount) throws Exception {
+        String updateQuery = "UPDATE accounts SET bal = bal + ? WHERE accno = ?";
+        try {
+        	PreparedStatement statement = con.prepareStatement(updateQuery);
+            statement.setDouble(1, amount);
+            statement.setInt(2, accountNumber);
+            int rowsAffected = statement.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("Balance updated successfully.");
+            } else {
+                System.out.println("Failed to update balance.");
+            }
+        }
+	
+    catch(Exception e){
+    	e.printStackTrace();
+    }
+    }
+}
+
+

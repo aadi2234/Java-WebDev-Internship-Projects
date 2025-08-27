@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;EV Charging Station Finder&apos;&#x0D;&#x0A;- Original project: &apos;EV Charging Station Finder&apos;&#x0D;&#x0A;- Original element: &apos;functions.LoginServlet.java&apos;" description="Delete element" element1="/src&lt;functions{LoginServlet.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1688883260573" subPackages="false" version="1.0"/>
+</session>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body> 
+<h1 style="color:orange;" align="center">$-------------ICICI Bank-------------$</h1>
+<!-- <p style="color:black;" >The platform and its application will provide banks benefit from real-time interactions with their customers.</p>-->
+<p>          </p>
+<h5>Developed by: Aditya Dhakane</h5>
+<h5>Contact no: 9309298067</h5>
+<h5>Email: dhakaneaditya502@gmail.com</h5>
+<form>
+  		    <input type="button" value="Go back!" onclick="history.back()"> 
+</form>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Reminder</title>
+  <style>
+    /* Add some basic styling to the form */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      width: 300px;
+      padding: 20px;
+      background-color: #ffffff;
+      margin: 0 auto;
+      margin-top: 100px;
+      border: 1px solid #cccccc;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Add Reminder</h2>
+    <form action="AddReminderServlet" method="POST">
+      <input type="text" name="title" placeholder="Title" required><br>
+      <textarea name="description" placeholder="Description" rows="4" required></textarea><br>
+      <input type="submit" value="Add" name="addbtn">
+    </form>
+  </div>
+</body>
+</html>
